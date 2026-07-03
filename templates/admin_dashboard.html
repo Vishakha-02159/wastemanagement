@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+
+    <a href="/admin_dashboard">Dashboard</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="main-content">
+
+    <h1>Admin Dashboard</h1>
+
+    <div class="cards">
+        <div class="card">
+            <h3>{{ total }}</h3>
+            <p>Total Requests</p>
+        </div>
+
+        <div class="card">
+            <h3>{{ pending }}</h3>
+            <p>Pending</p>
+        </div>
+
+        <div class="card">
+            <h3>{{ approved }}</h3>
+            <p>Approved</p>
+        </div>
+
+        <div class="card">
+            <h3>{{ rejected }}</h3>
+            <p>Rejected</p>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Waste Type</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for r in requests %}
+        <tr>
+            <td>{{ r[0] }}</td>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+            <td>{{ r[3] }}</td>
+            <td>{{ r[4] }}</td>
+            <td>{{ r[5] }}</td>
+           <td>
+    <a href="/approve/{{ r[0] }}" class="action-btn approve">Approve</a>
+
+    <a href="/reject/{{ r[0] }}" class="action-btn reject">Reject</a>
+
+    <a href="/delete/{{ r[0] }}" class="action-btn delete">Delete</a>
+</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>

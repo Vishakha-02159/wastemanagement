@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Waste Collection Request</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='waste.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h2>Waste Collection Request</h2>
+
+        <form method="POST">
+
+            <label>Waste Type</label>
+            <select name="waste_type" required>
+                <option value="">Select Waste Type</option>
+                <option value="Wet">Wet Waste</option>
+                <option value="Dry">Dry Waste</option>
+                <option value="Plastic">Plastic Waste</option>
+                <option value="Medical">Medical Waste</option>
+                <option value="E-Waste">E-Waste</option>
+            </select>
+
+            <label>Location</label>
+            <input type="text" name="location" placeholder="Enter Location" required>
+
+            <label>Collection Date</label>
+            <input type="date" name="collection_date" required>
+
+            <button type="submit">Submit Request</button>
+
+        </form>
+
+        <a href="/user_dashboard" class="back-btn">Back to Dashboard</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

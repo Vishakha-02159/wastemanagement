@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='auth.css') }}">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">♻ Smart Waste Management</div>
+
+    <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+          <a href="/contact">Contact</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h2>Create Account</h2>
+
+        <form method="POST">
+
+            <input type="text"
+                   name="name"
+                   placeholder="Enter Name"
+                   required>
+
+            <input type="email"
+                   name="email"
+                   placeholder="Enter Email"
+                   required>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Enter Password"
+                   required>
+
+            <button type="submit">
+                Register
+            </button>
+
+        </form>
+
+        <p>
+            Already have an account?
+            <a href="/login">Login</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

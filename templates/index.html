@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Waste Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="logo">
+            ♻ Smart Waste Management
+        </div>
+
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            <a href="/contact">Contact</a>
+        </nav>
+
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Keep Your City Clean & Green</h1>
+
+            <p>
+                Together we can make a difference in maintaining
+                a cleaner and healthier environment.
+            </p>
+
+            <div class="buttons">
+                <a href="/register" class="btn">Register</a>
+                <a href="/login" class="btn btn2">Login</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+
+        <div class="stat-box">
+            <h2>{{ total_requests }}</h2>
+            <p>Total Requests</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>{{ approved_requests }}</h2>
+            <p>Approved Requests</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>{{ total_users }}</h2>
+            <p>Registered Users</p>
+        </div>
+
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about">
+
+        <h2>About Our System</h2>
+
+        <p>
+            Smart Waste Management System allows citizens to request
+            waste collection online while administrators monitor,
+            approve and manage requests efficiently.
+        </p>
+
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+
+        <div class="card">
+            🚛 Easy Waste Collection
+        </div>
+
+        <div class="card">
+            📊 Admin Monitoring
+        </div>
+
+        <div class="card">
+            🔔 Status Tracking
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2026 Smart Waste Management | Built for Clean Cities ♻</p>
+    </footer>
+
+</body>
+</html>

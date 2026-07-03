@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>SWMS</h2>
+
+        <a href="/user_dashboard">Dashboard</a>
+        <a href="/waste_collection">Request Waste</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- HEADER -->
+        <div class="topbar">
+            <h1>Welcome {{ session['name'] }}</h1>
+        </div>
+
+        <!-- STATS -->
+        <div class="cards">
+            {{ total }} {{ pending }} {{ approved }} {{ rejected }}
+            <div class="card">
+                <h3>{{ total }}</h3>
+                <p>Total Requests</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ pending }}</h3>
+                <p>Pending</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ approved }}</h3>
+                <p>Approved</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ rejected }}</h3>
+                <p>Rejected</p>
+            </div>
+        </div>
+       
+
+        <!-- TABLE -->
+        <div class="table-box">
+            <h2>My Requests</h2>
+
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Waste Type</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
