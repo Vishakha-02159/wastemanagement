@@ -1,20 +1,12 @@
-#from flask import Flask, render_template, request, redirect, session
-#import pymysql
-#pymysql.install_as_MySQLdb()
 from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
-import pymysql
-import os
-
-pymysql.install_as_MySQLdb()
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask(__name__)
 app.secret_key = "waste_management_secret_key"
 
-
-import os
-
+# MySQL Config (Aiven)
 app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
 app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
 app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
