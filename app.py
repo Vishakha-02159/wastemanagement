@@ -1,5 +1,11 @@
+#from flask import Flask, render_template, request, redirect, session
+#import pymysql
+#pymysql.install_as_MySQLdb()
 from flask import Flask, render_template, request, redirect, session
+from flask_mysqldb import MySQL
 import pymysql
+import os
+
 pymysql.install_as_MySQLdb()
 from werkzeug.security import generate_password_hash, check_password_hash
 
