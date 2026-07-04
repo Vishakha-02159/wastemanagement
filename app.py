@@ -1,18 +1,23 @@
+import pymysql
 from flask import Flask, render_template, request, redirect, session
-from flask_mysqldb import MySQL
-from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
+
+pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 app.secret_key = "waste_management_secret_key"
 
-# MySQL Config (Aiven)
+# DB CONFIG
+import MySQLdb
+
 app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
 app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
 app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
 app.config['MYSQL_PORT'] = int(os.environ.get('MYSQL_PORT', 3306))
 
+from flask_mysqldb import MySQL
 mysql = MySQL(app)
 
 # ---------------- HOME ----------------
@@ -21,13 +26,13 @@ def home():
 
     cur = mysql.connection.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM WASTE_COLLECTION")
+    cur.execute("SELECT COUNT(*) FROM waste_collection")
     total_requests = cur.fetchone()[0] or 0
 
-    cur.execute("SELECT COUNT(*) FROM WASTE_COLLECTION WHERE STATUS='APPROVED'")
+    cur.execute("SELECT COUNT(*) FROM waste_collection WHERE STATUS='APPROVED'")
     approved_requests = cur.fetchone()[0] or 0
 
-    cur.execute("SELECT COUNT(*) FROM USERS")
+    cur.execute("SELECT COUNT(*) FROM users")
     total_users = cur.fetchone()[0] or 0
 
     cur.close()
@@ -55,7 +60,7 @@ def register():
         cur = mysql.connection.cursor()
 
         cur.execute("""
-        INSERT INTO USERS(NAME, EMAIL, PASSWORD)
+        INSERT INTO users(name, email, password)
         VALUES(%s, %s, %s)
         """, (name, email, hashed_password))
 
@@ -80,7 +85,7 @@ def login():
 
         cur.execute("""
         SELECT USER_ID, NAME, EMAIL, PASSWORD, ROLE
-        FROM USERS
+        FROM users
         WHERE EMAIL=%s
         """, (email,))
 
@@ -120,7 +125,7 @@ def user_dashboard():
 
     cur.execute("""
     SELECT COLLECTION_ID, WASTE_TYPE, LOCATION, COLLECTION_DATE, STATUS
-    FROM WASTE_COLLECTION
+    FROM waste_collection
     WHERE USER_ID=%s
     """, (session['user_id'],))
 
@@ -146,21 +151,21 @@ def admin_dashboard():
            WC.LOCATION,
            WC.COLLECTION_DATE,
            WC.STATUS
-    FROM WASTE_COLLECTION WC
-    JOIN USERS U ON WC.USER_ID = U.USER_ID
+    FROM waste_collection WC
+    JOIN users U ON WC.USER_ID = U.USER_ID
     """)
     requests = cur.fetchall()
 
-    cur.execute("SELECT COUNT(*) FROM WASTE_COLLECTION")
+    cur.execute("SELECT COUNT(*) FROM waste_collection")
     total = cur.fetchone()[0] or 0
 
-    cur.execute("SELECT COUNT(*) FROM WASTE_COLLECTION WHERE STATUS='PENDING'")
+    cur.execute("SELECT COUNT(*) FROM waste_collection WHERE STATUS='PENDING'")
     pending = cur.fetchone()[0] or 0
 
-    cur.execute("SELECT COUNT(*) FROM WASTE_COLLECTION WHERE STATUS='APPROVED'")
+    cur.execute("SELECT COUNT(*) FROM waste_collection WHERE STATUS='APPROVED'")
     approved = cur.fetchone()[0] or 0
 
-    cur.execute("SELECT COUNT(*) FROM WASTE_COLLECTION WHERE STATUS='REJECTED'")
+    cur.execute("SELECT COUNT(*) FROM waste_collection WHERE STATUS='REJECTED'")
     rejected = cur.fetchone()[0] or 0
 
     cur.close()
@@ -192,7 +197,7 @@ def waste_collection():
         cur = mysql.connection.cursor()
 
         cur.execute("""
-        INSERT INTO WASTE_COLLECTION
+        INSERT INTO waste_collection
         (USER_ID, WASTE_TYPE, LOCATION, COLLECTION_DATE, STATUS)
         VALUES (%s, %s, %s, %s, 'PENDING')
         """, (user_id, waste_type, location, collection_date))
@@ -215,7 +220,7 @@ def approve(id):
     cur = mysql.connection.cursor()
 
     cur.execute("""
-    UPDATE WASTE_COLLECTION
+    UPDATE waste_collection
     SET STATUS='APPROVED'
     WHERE COLLECTION_ID=%s
     """, (id,))
@@ -236,7 +241,7 @@ def reject(id):
     cur = mysql.connection.cursor()
 
     cur.execute("""
-    UPDATE WASTE_COLLECTION
+    UPDATE waste_collection
     SET STATUS='REJECTED'
     WHERE COLLECTION_ID=%s
     """, (id,))
@@ -257,7 +262,7 @@ def delete(id):
     cur = mysql.connection.cursor()
 
     cur.execute("""
-    DELETE FROM WASTE_COLLECTION
+    DELETE FROM waste_collection
     WHERE COLLECTION_ID=%s
     """, (id,))
 
