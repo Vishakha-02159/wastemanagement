@@ -1,5 +1,6 @@
 import pymysql
 from flask import Flask, render_template, request, redirect, session
+from werkzeug.utils import secure_filename  
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -194,13 +195,17 @@ def waste_collection():
         location = request.form['location']
         collection_date = request.form['collection_date']
 
+        photo = request.files['photo']
+        filename = secure_filename(photo.filename)
+        photo.save(os.path.join('static/uploads', filename))
+
         cur = mysql.connection.cursor()
 
         cur.execute("""
         INSERT INTO waste_collection
-        (USER_ID, WASTE_TYPE, LOCATION, COLLECTION_DATE, STATUS)
-        VALUES (%s, %s, %s, %s, 'PENDING')
-        """, (user_id, waste_type, location, collection_date))
+        (USER_ID, WASTE_TYPE, LOCATION, COLLECTION_DATE, IMAGE_PATH, STATUS)
+        VALUES (%s, %s, %s, %s, %s, 'PENDING')
+        """, (user_id, waste_type, location, collection_date, filename))
 
         mysql.connection.commit()
         cur.close()

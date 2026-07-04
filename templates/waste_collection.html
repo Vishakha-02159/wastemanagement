@@ -12,7 +12,7 @@
 
         <h2>Waste Collection Request</h2>
 
-        <form method="POST">
+            <form method="POST" enctype="multipart/form-data"></form>
 
             <label>Waste Type</label>
             <select name="waste_type" required>
@@ -29,6 +29,14 @@
 
             <label>Collection Date</label>
             <input type="date" name="collection_date" required>
+            <label>Waste Photo</label>
+
+<input
+    type="file"
+    name="photo"
+    accept="image/*"
+    capture="environment"
+    required>
 
             <button type="submit">Submit Request</button>
 
