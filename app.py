@@ -195,9 +195,12 @@ def waste_collection():
         location = request.form['location']
         collection_date = request.form['collection_date']
 
+        os.makedirs("static/uploads", exist_ok=True)
+
         photo = request.files['photo']
         filename = secure_filename(photo.filename)
-        photo.save(os.path.join('static/uploads', filename))
+
+        photo.save(os.path.join("static/uploads", filename))
 
         cur = mysql.connection.cursor()
 
