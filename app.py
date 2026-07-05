@@ -1,5 +1,3 @@
-from fileinput import filename
-
 import pymysql
 from flask import Flask, render_template, request, redirect, session
 from werkzeug.utils import secure_filename  
@@ -115,6 +113,10 @@ def login():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+#----------------- FORGOT PASSWORD ----------------
+@app.route('/forgot_password')
+def forgot_password():
+    return render_template('forgot_password.html')
 
 
 # ---------------- USER DASHBOARD ----------------
@@ -153,7 +155,8 @@ def admin_dashboard():
            WC.WASTE_TYPE,
            WC.LOCATION,
            WC.COLLECTION_DATE,
-           WC.STATUS
+           WC.STATUS,
+           WC.IMAGE_PATH,
     FROM waste_collection WC
     JOIN users U ON WC.USER_ID = U.USER_ID
     """)
@@ -202,7 +205,7 @@ def waste_collection():
         photo = request.files['photo']
         filename = secure_filename(photo.filename)
 
-        photo.save(os.path.join("static/uploads", filename))
+        photo.save(os.path.join(upload_folder, filename))
 
         cur = mysql.connection.cursor()
 

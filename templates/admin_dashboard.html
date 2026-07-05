@@ -46,6 +46,7 @@
             <th>Waste Type</th>
             <th>Location</th>
             <th>Date</th>
+            <th>Photo</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -57,14 +58,25 @@
             <td>{{ r[2] }}</td>
             <td>{{ r[3] }}</td>
             <td>{{ r[4] }}</td>
-            <td>{{ r[5] }}</td>
-           <td>
-    <a href="/approve/{{ r[0] }}" class="action-btn approve">Approve</a>
 
-    <a href="/reject/{{ r[0] }}" class="action-btn reject">Reject</a>
+            <td>
+                {% if r[5] %}
+                <img src="{{ url_for('static', filename='uploads/' + r[5]) }}"
+                     width="80">
+                {% else %}
+                No Photo
+                {% endif %}
+            </td>
 
-    <a href="/delete/{{ r[0] }}" class="action-btn delete">Delete</a>
-</td>
+            <td>{{ r[6] }}</td>
+
+            <td>
+                <a href="/approve/{{ r[0] }}" class="action-btn approve">Approve</a>
+
+                <a href="/reject/{{ r[0] }}" class="action-btn reject">Reject</a>
+
+                <a href="/delete/{{ r[0] }}" class="action-btn delete">Delete</a>
+            </td>
         </tr>
         {% endfor %}
     </table>
