@@ -1,3 +1,5 @@
+from fileinput import filename
+
 import pymysql
 from flask import Flask, render_template, request, redirect, session
 from werkzeug.utils import secure_filename  
@@ -194,8 +196,6 @@ def waste_collection():
         waste_type = request.form['waste_type']
         location = request.form['location']
         collection_date = request.form['collection_date']
-
-        os.makedirs("static/uploads", exist_ok=True)
 
         photo = request.files['photo']
         filename = secure_filename(photo.filename)
