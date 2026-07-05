@@ -156,7 +156,7 @@ def admin_dashboard():
            WC.LOCATION,
            WC.COLLECTION_DATE,
            WC.STATUS,
-           WC.IMAGE_PATH,
+           WC.IMAGE_PATH
     FROM waste_collection WC
     JOIN users U ON WC.USER_ID = U.USER_ID
     """)
