@@ -2,6 +2,8 @@ import pymysql
 from flask import Flask, render_template, request, redirect, session
 from werkzeug.utils import secure_filename  
 import os
+import cloudinary
+import cloudinary.uploader
 from werkzeug.security import generate_password_hash, check_password_hash
 
 pymysql.install_as_MySQLdb()
@@ -20,6 +22,12 @@ app.config['MYSQL_PORT'] = int(os.environ.get('MYSQL_PORT', 3306))
 
 from flask_mysqldb import MySQL
 mysql = MySQL(app)
+#---------- cloudinary config -----------
+cloudinary.config(
+    cloud_name="lyk58rp7",
+    api_key="381895628354541",
+    api_secret="C_-JC5QnSzpqdhqD1gkwBS49zyc"
+)
 
 # ---------------- HOME ----------------
 @app.route('/')
@@ -118,13 +126,6 @@ def contact():
 def forgot_password():
     if request.method == 'POST':
         email = request.form['email']
-        # Add logic to handle forgot password functionality
-        pass
-    return render_template('forgot_password.html')
-@app.route('/forgot_password', methods=['GET', 'POST'])
-def forgot_password():
-    if request.method == 'POST':
-        email = request.form['email']
         pass
     return render_template('forgot_password.html')
 
@@ -209,13 +210,12 @@ def waste_collection():
         waste_type = request.form['waste_type']
         location = request.form['location']
         collection_date = request.form['collection_date']
-        upload_folder = "static/uploads"
-        os.makedirs(upload_folder, exist_ok=True)
 
         photo = request.files['photo']
-        filename = secure_filename(photo.filename)
 
-        photo.save(os.path.join(upload_folder, filename))
+        result = cloudinary.uploader.upload(photo)
+
+        image_url = result["secure_url"]
 
         cur = mysql.connection.cursor()
 
@@ -223,7 +223,7 @@ def waste_collection():
         INSERT INTO waste_collection
         (USER_ID, WASTE_TYPE, LOCATION, COLLECTION_DATE, IMAGE_PATH, STATUS)
         VALUES (%s, %s, %s, %s, %s, 'PENDING')
-        """, (user_id, waste_type, location, collection_date, filename))
+        """, (user_id, waste_type, location, collection_date, image_url))
 
         mysql.connection.commit()
         cur.close()
