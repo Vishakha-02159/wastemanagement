@@ -326,6 +326,10 @@ def delete(id):
 def logout():
     session.clear()
     return redirect('/login')
+#----------------- GOOGLE SITE VERIFICATION ----------------
+@app.route('/google437fae134a800d4e.html')
+def google_verify():
+    return "google-site-verification: google437fae134a800d4e.html"
 
 
 if __name__ == '__main__':
