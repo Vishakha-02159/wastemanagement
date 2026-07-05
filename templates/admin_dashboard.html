@@ -59,16 +59,15 @@
             <td>{{ r[3] }}</td>
             <td>{{ r[4] }}</td>
 
+            <td>{{ r[5] }}</td>
             <td>
-                {% if r[5] %}
-                <img src="{{ url_for('static', filename='uploads/' + r[5]) }}"
-                     width="80">
-                {% else %}
-                No Photo
-                {% endif %}
-            </td>
-
-            <td>{{ r[6] }}</td>
+            {% if r[6] %}
+            <img src="{{ url_for('static', filename='uploads/' + r[6]) }}"
+             width="80">
+            {% else %}
+            No Photo
+             {% endif %}
+             </td>
 
             <td>
                 <a href="/approve/{{ r[0] }}" class="action-btn approve">Approve</a>
