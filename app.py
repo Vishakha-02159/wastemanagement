@@ -114,8 +114,18 @@ def login():
 def contact():
     return render_template('contact.html')
 #----------------- FORGOT PASSWORD ----------------
-@app.route('/forgot_password')
+@app.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        # Add logic to handle forgot password functionality
+        pass
+    return render_template('forgot_password.html')
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        pass
     return render_template('forgot_password.html')
 
 
