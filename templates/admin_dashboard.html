@@ -40,45 +40,45 @@
     </div>
 
     <table>
-        <tr>
-            <th>ID</th>
-            <th>User</th>
-            <th>Waste Type</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Photo</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
+    <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Waste Type</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Photo</th>
+        <th>Action</th>
+    </tr>
 
-        {% for r in requests %}
-        <tr>
-            <td>{{ r[0] }}</td>
-            <td>{{ r[1] }}</td>
-            <td>{{ r[2] }}</td>
-            <td>{{ r[3] }}</td>
-            <td>{{ r[4] }}</td>
+    {% for r in requests %}
+    <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>{{ r[4] }}</td>
 
-            <td>{{ r[5] }}</td>
-            <td>
+        <td>{{ r[5] }}</td>
+
+        <td>
             {% if r[6] %}
-            <img src="{{ url_for('static', filename='uploads/' + r[6]) }}"
-             width="80">
+            <img src="{{ r[6] }}" width="80">
             {% else %}
             No Photo
-             {% endif %}
-             </td>
+            {% endif %}
+        </td>
 
-            <td>
-                <a href="/approve/{{ r[0] }}" class="action-btn approve">Approve</a>
+        <td>
+            <a href="/approve/{{ r[0] }}" class="action-btn approve">Approve</a>
 
-                <a href="/reject/{{ r[0] }}" class="action-btn reject">Reject</a>
+            <a href="/reject/{{ r[0] }}" class="action-btn reject">Reject</a>
 
-                <a href="/delete/{{ r[0] }}" class="action-btn delete">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+            <a href="/delete/{{ r[0] }}" class="action-btn delete">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
 </div>
 
