@@ -196,6 +196,8 @@ def waste_collection():
         waste_type = request.form['waste_type']
         location = request.form['location']
         collection_date = request.form['collection_date']
+        upload_folder = "static/uploads"
+        os.makedirs(upload_folder, exist_ok=True)
 
         photo = request.files['photo']
         filename = secure_filename(photo.filename)
