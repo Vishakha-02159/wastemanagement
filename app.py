@@ -121,13 +121,39 @@ def login():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
 #----------------- FORGOT PASSWORD ----------------
 @app.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
     if request.method == 'POST':
         email = request.form['email']
-        pass
+        session['reset_email'] = email
+        return redirect('/reset_password')
+
     return render_template('forgot_password.html')
+#----------------- RESET PASSWORD ----------------
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        new_password = request.form['new_password']
+        confirm_password = request.form['confirm_password']
+
+        if new_password != confirm_password:
+            return "Passwords do not match"
+
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE users
+            SET PASSWORD=%s
+            WHERE EMAIL=%s
+        """, (generate_password_hash(new_password), session['reset_email']))
+
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect('/login')
+
+    return render_template('reset_password.html')
 
 
 # ---------------- USER DASHBOARD ----------------
