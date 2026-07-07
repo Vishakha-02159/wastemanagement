@@ -327,6 +327,13 @@ def logout():
     session.clear()
     return redirect('/login')
 #----------------- GOOGLE SITE VERIFICATION ----------------
+@app.route('/robots.txt')
+def robots():
+    return """User-agent: *
+Allow: /
+
+Sitemap: https://wastemanagement-1dyz.onrender.com/sitemap.xml
+""", 200, {'Content-Type': 'text/plain'}
 @app.route('/google437fae134a800d4e.html')
 def google_verify():
     return "google-site-verification: google437fae134a800d4e.html",200
