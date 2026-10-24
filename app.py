@@ -337,6 +337,7 @@ Sitemap: https://wastemanagement-1dyz.onrender.com/sitemap.xml
 @app.route('/google437fae134a800d4e.html')
 def google_verify():
     return "google-site-verification: google437fae134a800d4e.html",200
+
 @app.route('/sitemap.xml')
 def sitemap():
     xml = """<?xml version="1.0" encoding="UTF-8"?>
@@ -345,21 +346,15 @@ def sitemap():
         <loc>https://wastemanagement-1dyz.onrender.com/</loc>
     </url>
     <url>
-        <loc>https://wastemanagement-1dyz.onrender.com/login</loc>
-    </url>
-    <url>
-        <loc>https://wastemanagement-1dyz.onrender.com/register</loc>
-    </url>
-    <url>
-        <loc>https://wastemanagement-1dyz.onrender.com/admin_dashboard</loc>
+        <loc>https://wastemanagement-1dyz.onrender.com/contact</loc>
     </url>
 </urlset>"""
-    response = app.response_class(
+    return app.response_class(
         response=xml,
         status=200,
         mimetype='application/xml'
     )
-    return response
+
 
 
 if __name__ == '__main__':
