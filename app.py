@@ -334,9 +334,12 @@ Allow: /
 
 Sitemap: https://wastemanagement-1dyz.onrender.com/sitemap.xml
 """, 200, {'Content-Type': 'text/plain'}
-@app.route('/google437fae134a800d4e.html')
+
+
+@app.route('/google0c0a4ab871ea6905.html')
 def google_verify():
-    return "google-site-verification: google437fae134a800d4e.html",200
+    return "google-site-verification: google0c0a4ab871ea6905.html", 200
+
 
 @app.route('/sitemap.xml')
 def sitemap():
@@ -349,12 +352,12 @@ def sitemap():
         <loc>https://wastemanagement-1dyz.onrender.com/contact</loc>
     </url>
 </urlset>"""
+
     return app.response_class(
         response=xml,
         status=200,
         mimetype='application/xml'
     )
-
 
 
 if __name__ == '__main__':
